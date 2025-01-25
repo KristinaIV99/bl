@@ -68,10 +68,14 @@ export class WordReader {
 
     getKnownWords() {
 		return Object.keys(this.dictionary)
-			.map(word => word.split('_')[0])  // Gauti pagrindines formas
+			.map(key => {
+				// Išskiriame pagrindinę formą iš rakto (pvz., "går_verb" → "går")
+				const baseForm = key.split('_')[0].toLowerCase();
+				return this.dictionary[key][0]?.base_word || baseForm;
+			})
 			.filter((word, index, self) => 
-				self.indexOf(word) === index &&  // Pašalinti dublikatus
-				/^[a-zåäö]+$/i.test(word)       // Leisti tik raidės
+				self.indexOf(word) === index &&  // Pašaliname dublikatus
+				/^[a-zåäö]+$/i.test(word)        // Filtruojame tik žodžius be specialių simbolių
 			);
 	}
 
@@ -85,7 +89,7 @@ export class WordReader {
 			const phrasePlaceholders = [];
 			let tempContent = content.replace(/<span class="known-phrase"[^>]*>.*?<\/span>/g, (match) => {
 				const id = `###PHRASE${phrasePlaceholders.length}###`;
-				phrasePlaceholders.push({id, content: match});
+				phrasePlaceholders.push({ id, content: match });
 				return id;
 			});
 	
@@ -99,24 +103,28 @@ export class WordReader {
 				return placeholder;
 			});
 	
-			// 2. Apdorojame žodžius
-			const sortedWords = Object.keys(this.dictionary).sort((a, b) => b.length - a.length);
-			sortedWords.forEach(word => {
-				const baseWord = word.split('_')[0].toLowerCase();
-				const regexPattern = String.raw`(\b|^)${this.escapeRegExp(baseWord)}(\b|$)(?![^<]*>)`;
-				const regex = new RegExp(regexPattern, 'giu');
-			
-				tempContent = tempContent.replace(regex, (match, p1, p2) => {
-					return `${p1}<span class="known-word" data-word="${baseWord}">${match}</span>${p2}`;
-				});
+			// 2. Gauti unikalias pagrindines žodžio formas
+			const baseWords = [...new Set(
+				Object.keys(this.dictionary).map(key => key.split('_')[0].toLowerCase())
+		)].sort((a, b) => b.length - a.length);
+	
+			// 3. Apdorojame žodžius
+			baseWords.forEach(baseWord => {
+				const regex = new RegExp(
+					`(?<![\\p{L}'])\\b${this.escapeRegExp(baseWord)}\\b(?![\\p{L}'-])`, 
+					'giu'
+				);
+				tempContent = tempContent.replace(regex, match => 
+					`<span class="known-word" data-word="${baseWord}">${match}</span>`
+				);
 			});
 	
-			// 3. Atstatome HTML tag'us
+			// 4. Atstatome HTML tag'us
 			htmlTags.forEach((tag, placeholder) => {
 				tempContent = tempContent.replace(placeholder, tag);
 			});
 	
-			// 4. Atstatome frazes
+			// 5. Atstatome frazes
 			phrasePlaceholders.forEach(placeholder => {
 				tempContent = tempContent.replace(placeholder.id, placeholder.content);
 			});
@@ -132,51 +140,35 @@ export class WordReader {
 		try {
 			const wordLower = word.toLowerCase();
 			console.log(`Ieškomas žodis žodyne: "${wordLower}"`);
-
-            // Pirma bandome rasti per base_word (prioritetinė paieška)
-            let meanings = Object.values(this.dictionary)
-                .find(entries => entries.some(entry =>
-                    entry.base_word.toLowerCase() === wordLower
-                ));
-
-            // Jei neradome per base_word, ieškome tiesiogiai
-            if (!meanings) {
-                meanings = this.dictionary[wordLower];
-            }
-
-            // Jei vis dar neradome, ieškome per originalKey
-            if (!meanings) {
-                const foundEntry = Object.entries(this.dictionary)
-                    .find(([key, entries]) =>
-                        entries.some(entry =>
-                            entry.originalKey.toLowerCase().includes(wordLower)
-                        )
-                    );
-                if (foundEntry) {
-                    meanings = foundEntry[1];
-                }
-            }
-
-            if (!meanings || !Array.isArray(meanings) || meanings.length === 0) {
-                console.warn(`Nerasta reikšmių žodžiui: ${word}`);
-                return;
-            }
-
-            console.log(`Rastos reikšmės žodžiui "${word}":`, meanings);
-            this.removeCurrentTooltip();
-
-            const tooltip = this.createTooltip(word, meanings);
-            document.body.appendChild(tooltip);
-            this.currentTooltip = tooltip;
-
-            this.positionTooltip(tooltip, event.target);
-            this.setupTooltipListeners(tooltip, event.target);
-
-        } catch (error) {
-            console.error('Klaida rodant žodžio informaciją:', error);
-            this.removeCurrentTooltip();
-        }
-    }
+	
+			// Rasti visas galimas reikšmes
+			const meanings = Object.values(this.dictionary)
+				.flat()
+				.filter(entry => 
+					entry.base_word?.toLowerCase() === wordLower || 
+					entry.originalKey.toLowerCase().startsWith(wordLower + '_')
+				);
+	
+			if (!meanings.length) {
+				console.warn(`Nerasta reikšmių žodžiui: ${word}`);
+				return;
+			}
+	
+			console.log(`Rastos reikšmės žodžiui "${word}":`, meanings);
+			this.removeCurrentTooltip();
+	
+			const tooltip = this.createTooltip(word, meanings);
+			document.body.appendChild(tooltip);
+			this.currentTooltip = tooltip;
+	
+			this.positionTooltip(tooltip, event.target);
+			this.setupTooltipListeners(tooltip, event.target);
+	
+		} catch (error) {
+			console.error('Klaida rodant žodžio informaciją:', error);
+			this.removeCurrentTooltip();
+		}
+	}
 
     createTooltip(word, meanings) {
         const tooltip = document.createElement('div');
