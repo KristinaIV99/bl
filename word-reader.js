@@ -40,33 +40,17 @@ export class WordReader {
 
             // Išsaugome žodyno duomenis
             Object.entries(data).forEach(([key, info]) => {
-                if (!info || !info.base_word) {
-                    console.warn(`Praleistas netinkamas žodyno įrašas: ${key}`);
-                    return;
-                }
-
-                // Saugome ir pagal originalų raktą, ir pagal base_word
-                const baseWord = info.base_word.toLowerCase();
-                const baseEntry = {
-                    ...info,
-                    originalKey: key
-                };
-
-                // Saugome pagal base_word
-                if (!this.dictionary[baseWord]) {
-                    this.dictionary[baseWord] = [];
-                }
-                this.dictionary[baseWord].push(baseEntry);
-
-                // Saugome pagal originalų raktą
-                const keyLower = key.toLowerCase().split('_')[0]; // Pašaliname _pron, _verb, etc.
-                if (keyLower !== baseWord) {
-                    if (!this.dictionary[keyLower]) {
-                        this.dictionary[keyLower] = [];
-                    }
-                    this.dictionary[keyLower].push(baseEntry);
-                }
-            });
+				const baseWord = info.base_word.toLowerCase();
+				const keyWithoutSuffix = key.split('_')[0].toLowerCase();
+		
+				// Įtraukti visus variantus
+				[baseWord, keyWithoutSuffix].forEach(target => {
+					if (!this.dictionary[target]) this.dictionary[target] = [];
+					if (!this.dictionary[target].some(e => e.originalKey === key)) {
+						this.dictionary[target].push({ ...info, originalKey: key });
+					}
+				});
+			});
 
             // Patikrinkime, ar įkelti skandinaviški žodžiai
             const scandinavianWords = Object.keys(this.dictionary)
@@ -83,9 +67,12 @@ export class WordReader {
     }
 
     getKnownWords() {
-		return Object.keys(this.dictionary).filter(word => 
-			/^[a-zåäö]+$/.test(word) // Filtruojame tik mažąsias raides be specialių simbolių
-		);
+		return Object.keys(this.dictionary)
+			.map(word => word.split('_')[0])  // Gauti pagrindines formas
+			.filter((word, index, self) => 
+				self.indexOf(word) === index &&  // Pašalinti dublikatus
+				/^[a-zåäö]+$/i.test(word)       // Leisti tik raidės
+			);
 	}
 
 	processWords(content) {
@@ -115,9 +102,12 @@ export class WordReader {
 			// 2. Apdorojame žodžius
 			const sortedWords = Object.keys(this.dictionary).sort((a, b) => b.length - a.length);
 			sortedWords.forEach(word => {
-				const regex = new RegExp(`\\b${word}\\b`, 'gi');
-				tempContent = tempContent.replace(regex, (match) => {
-					return `<span class="known-word" data-word="${match}">${match}</span>`;
+				const baseWord = word.split('_')[0].toLowerCase();
+				const regexPattern = String.raw`(\b|^)${this.escapeRegExp(baseWord)}(\b|$)(?![^<]*>)`;
+				const regex = new RegExp(regexPattern, 'giu');
+			
+				tempContent = tempContent.replace(regex, (match, p1, p2) => {
+					return `${p1}<span class="known-word" data-word="${baseWord}">${match}</span>${p2}`;
 				});
 			});
 	
