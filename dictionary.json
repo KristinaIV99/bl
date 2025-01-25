@@ -1,0 +1,122 @@
+{
+    "jag_pron": {
+        "kalbos dalis": "pron",
+        "translation": "aš",
+        "additional": "sveikinimosi žodis",
+        "base_word": "jag"
+    },
+    "jag_subst": {
+        "kalbos dalis": "subst",
+        "translation": "perkūnija",
+        "additional": "mot. g., -n, -or",
+        "base_word": "jag"
+    },
+    "är_verb": {
+        "kalbos dalis": "pron",
+        "translation": "yra",
+        "additional": "veiksmažodis 'būti' esamojo laiko forma",
+        "base_word": "är"
+    },
+    "ett_verb": {
+        "kalbos dalis": "pron",
+        "translation": "yra",
+        "additional": "veiksmažodis 'būti' esamojo laiko forma",
+        "base_word": "ett"
+    },
+    "på_subst": {
+        "kalbos dalis": "subst",
+        "translation": "perkūnija",
+        "additional": "mot. g., -n, -or",
+        "base_word": "på"
+    },
+    "de_verb": {
+        "kalbos dalis": "pron",
+        "translation": "yra",
+        "additional": "veiksmažodis 'būti' esamojo laiko forma",
+        "base_word": "de"   
+    },
+    "hon_pron": {
+        "kalbos dalis": "pron",
+        "translation": "ji",
+        "additional": "veiksmažodis 'būti' esamojo laiko forma",
+        "base_word": "är"
+    },
+    "för_pron": {
+        "kalbos dalis": "pron",
+        "translation": "ji",
+        "additional": "veiksmažodis 'būti' esamojo laiko forma",
+        "base_word": "för"
+    },
+       "när_pron": {
+        "kalbos dalis": "pron",
+        "translation": "ji",
+        "additional": "veiksmažodis 'būti' esamojo laiko forma",
+        "base_word": "när"
+     },
+    "åska_verb": {
+        "kalbos dalis": "subst",
+        "translation": "perkūnija",
+        "additional": "mot. g., -n, -or",
+        "base_word": "åska"
+    },
+       "så_adv": {
+        "kalbos dalis": "adv",
+        "translation": "taip",
+        "additional": "prieveiksmis",
+        "base_word": "så"
+    },
+    "på_prep": {
+        "kalbos dalis": "prep",
+        "translation": "ant",
+        "additional": "prielinksnis",
+        "base_word": "på"
+    },
+    "går_verb": {
+        "kalbos dalis": "verb",
+        "translation": "eiti",
+        "additional": "veiksmažodis, esamasis laikas",
+        "base_word": "gå"
+    },
+    "ö_subst": {
+        "kalbos dalis": "subst",
+        "translation": "sala",
+        "additional": "daiktavardis",
+        "base_word": "ö"
+    },
+    "gå_verb": {
+        "kalbos dalis": "verb",
+        "translation": "eiti",
+        "additional": "veiksmažodis, bendratis",
+        "base_word": "gå"
+    },
+    "ut_adv": {
+        "kalbos dalis": "adv",
+        "translation": "lauk",
+        "additional": "prieveiksmis",
+        "base_word": "ut"
+    },
+    "er_pron": {
+        "kalbos dalis": "pron",
+        "translation": "jūs",
+        "additional": "įvardis",
+        "base_word": "er"
+    },
+    "ör_subst": {
+        "kalbos dalis": "subst",
+        "translation": "ėras",
+        "additional": "daiktavardis, smulkus pinigas",
+        "base_word": "ör"
+    },
+    "öra_subst": {
+        "kalbos dalis": "subst",
+        "translation": "ausis",
+        "additional": "daiktavardis",
+        "base_word": "öra"
+    },
+    "år_subst": {
+        "kalbos dalis": "subst",
+        "translation": "metai",
+        "additional": "daiktavardis",
+        "base_word": "år"
+    }
+}

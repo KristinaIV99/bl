@@ -1,0 +1,86 @@
+{
+    "kommer jag att kämpa": {
+        "phrase": "kommer jag att kämpa",
+		"type": "Pasisveikinimas",
+        "translation": "aš kovosiu",
+        "example": "God morgon! Hur mår du?",
+        "notes": "Naudojama ryte"
+    },
+    "ett är säkert": {
+        "phrase": "ett är säkert",
+		"type": "Pasisveikinimas",
+        "translation": "esu tikra",
+        "example": "God morgon! Hur mår du?",
+        "notes": "Naudojama ryte"
+    },
+    "de döda hemsöker": {
+        "phrase": "de döda hemsöker",
+		"type": "Pasisveikinimas",
+        "translation": "aš kovosiu",
+        "example": "God morgon! Hur mår du?",
+        "notes": "Naudojama ryte"
+    },
+	    "som om": {
+        "phrase": "som om",
+		"type": "Pasisveikinimas",
+        "translation": "tarsi",
+        "example": "God morgon! Hur mår du?",
+        "notes": "Naudojama ryte"
+    },
+    "Hur har ni det egentligen": {
+        "phrase": "Hur har ni det egentligen",
+		"type": "Pasisveikinimas",
+        "translation": "esu tikra",
+        "example": "God morgon! Hur mår du?",
+        "notes": "Naudojama ryte"
+    },
+    "Hur går det": {
+        "phrase": "Hur går det",
+		"type": "Pasisveikinimas",
+        "translation": "aš kovosiu",
+        "example": "God morgon! Hur mår du?",
+        "notes": "Naudojama ryte"
+    },
+	    "Som om hon": {
+        "phrase": "Som om hon",
+		"type": "Pasisveikinimas",
+        "translation": "tarsi",
+        "example": "God morgon! Hur mår du?",
+        "notes": "Naudojama ryte"
+    },
+    "ska jag göra": {
+        "phrase": "ska jag göra",
+		"type": "Pasisveikinimas",
+        "translation": "darysiu",
+        "example": "God morgon! Hur mår du?",
+        "notes": "Naudojama ryte"
+    },
+    "Så länge det": {
+        "phrase": "Så länge det",
+		"type": "Pasisveikinimas",
+        "translation": "esu tikra",
+        "example": "God morgon! Hur mår du?",
+        "notes": "Naudojama ryte"
+    },
+    "Så länge det finns kvinnor": {
+        "phrase": "Så länge det finns kvinnor",
+		"type": "Pasisveikinimas",
+        "translation": "aš kovosiu",
+        "example": "God morgon! Hur mår du?",
+        "notes": "Naudojama ryte"
+    },
+	    "som om minnet av": {
+        "phrase": "som om minnet av",
+		"type": "Pasisveikinimas",
+        "translation": "tarsi",
+        "example": "God morgon! Hur mår du?",
+        "notes": "Naudojama ryte"
+    },
+    "jag ligger": {
+        "phrase": "jag ligger",
+		"type": "Pasisveikinimas",
+        "translation": "darysiu",
+        "example": "God morgon! Hur mår du?",
+        "notes": "Naudojama ryte"
+    }
+}
